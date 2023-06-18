@@ -1,11 +1,14 @@
 import pyttsx3, PyPDF2
-pdfreader = PyPDF2.PdfFileReader(open('Irish.pdf' 'rb'))
+from PyPDF2 import PdfReader
+
+reader = PdfReader("Irish.pdf")
 speaker = pyttsx3.init()
 
-for page_num in range(pdfreader.numPages):
-    text = pdfreader.getpage(page_num).extractText()
-    clean_text = text.strip().replace('\n', ' ')
-    print(clean_text)
+number_of_pages = len(reader.pages)
+page = reader.pages[0]
+text = page.extract_text()
+clean_text = text.strip().replace('\n', ' ')
+print(clean_text)
 
 speaker.save_to_file(clean_text, 'Irish.mp3')
 speaker.runAndWait()
